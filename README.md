@@ -20,30 +20,30 @@ The objects are pretty easy to use, and generally behave like their in-memory co
 ```python
 from sqlite_object import SqliteDict, SqliteList, SqliteSet
 
-#Create a dict
+# Create a dict
 d = SqliteDict()
 d["key"] = "value"
 
-#Create a list
+# Create a list
 l = SqliteList()
 l.append("something")
 
-#Create a set
+# Create a set
 s = SqliteSet()
 s.add(1)
 
-#Initializers can be used with all the object types
+# Initializers can be used with all the object types
 d = SqliteDict({'key':'value'})
 l = SqliteList([1, 2, 3])
 s = SqliteSet({1, 2, 3})
 
-#If you want to persist the backing database, say so.  
-#You can also specify the filename of the database (instead of using a randomly generated name).  
-#Handy if you need to put the db somewhere other than the working directory.  
-#All of the objects can be created this way.
+# If you want to persist the backing database, say so.
+# You can also specify the filename of the database (instead of using a randomly generated name).
+# Handy if you need to put the db somewhere other than the working directory.
+# All of the objects can be created this way.
 l = SqliteList([1, 2, 3], filename="/var/something/db/my_awesome_db.sqlite3", persist=True)
 
-#Then if you need to create it later, it will come back with the same data
+# Then if you need to create it later, it will come back with the same data
 del l
 l2 = SqliteList(filename="/var/something/db/my_awesome_db.sqlite3", persist=True)
 
