@@ -76,7 +76,7 @@ class SqliteObject(object):
 
     class _CloseableCursor(sqlite3.Cursor):
         def __init__(self, *args, **kwargs):
-            super(SqliteObject._CloseableCursor, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
         def __enter__(self):
             return self

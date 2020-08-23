@@ -21,7 +21,7 @@ class SqliteSet(SqliteObject):
         persist=False,
         commit_every=0,
     ):
-        super(SqliteSet, self).__init__(
+        super().__init__(
             self.__schema,
             self.__index,
             filename or str(uuid.uuid4()) + ".sqlite3",
