@@ -1,11 +1,6 @@
 from ._sqlite_object import SqliteObject
 import json, uuid
 
-try:
-    unicode("hello")
-except NameError:
-    unicode = str
-
 
 class SqliteDict(SqliteObject):
     """
@@ -251,9 +246,9 @@ class SqliteDict(SqliteObject):
                 return
             else:
                 while True:
-                    outfile.write(unicode(json.dumps(str(this[0]))))
+                    outfile.write(json.dumps(str(this[0])))
                     outfile.write(u":")
-                    outfile.write(unicode(json.dumps(this[1])))
+                    outfile.write(json.dumps(this[1]))
                     try:
                         try:
                             this = iterator.__next__()
@@ -284,10 +279,10 @@ class SqliteDict(SqliteObject):
                 return
             else:
                 while True:
-                    outfile.write(unicode(key_coder(this[0])))
-                    outfile.write(unicode(key_val_separator))
-                    outfile.write(unicode(value_coder(this[1])))
-                    outfile.write(unicode(separator))
+                    outfile.write(key_coder(this[0]))
+                    outfile.write(key_val_separator)
+                    outfile.write(value_coder(this[1]))
+                    outfile.write(separator)
                     try:
                         try:
                             this = iterator.__next__()

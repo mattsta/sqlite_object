@@ -8,11 +8,6 @@ l.append("hi")
 l.append("another one!")
 """
 
-try:
-    unicode("hello")
-except NameError:
-    unicode = str
-
 
 class SqliteList(SqliteObject):
     """
@@ -281,7 +276,7 @@ class SqliteList(SqliteObject):
                 return
             else:
                 while True:
-                    outfile.write(unicode(json.dumps(this)))
+                    outfile.write(json.dumps(this))
                     try:
                         try:
                             this = iterator.__next__()
@@ -305,8 +300,8 @@ class SqliteList(SqliteObject):
                 return
             else:
                 while True:
-                    outfile.write(unicode(coder(this)))
-                    outfile.write(unicode(separator))
+                    outfile.write(coder(this))
+                    outfile.write(separator)
                     try:
                         try:
                             this = iterator.__next__()
