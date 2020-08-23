@@ -60,38 +60,40 @@ class SqliteDict(SqliteObject):
         with self.lock:
             if type(key) == slice:
                 raise KeyError("Slices not allowed in SqliteDict")
-            else:
-                with self._closeable_cursor() as cursor:
-                    cursor.execute(
-                        """SELECT value FROM dict WHERE key = ?""", (self._coder(key),)
-                    )
-                    row = cursor.fetchone()
-                    if row != None:
-                        return self._decoder(row[0])
-                    else:
-                        raise KeyError("Mapping key not found in dict")
+
+            with self._closeable_cursor() as cursor:
+                cursor.execute(
+                    """SELECT value FROM dict WHERE key = ?""", (self._coder(key),)
+                )
+                row = cursor.fetchone()
+                if row != None:
+                    return self._decoder(row[0])
+
+                raise KeyError("Mapping key not found in dict")
 
     def __setitem__(self, key, value):
         with self.lock:
             if type(key) == slice:
                 raise KeyError("Slices not allowed in SqliteDict")
-            else:
-                with self._closeable_cursor() as cursor:
-                    cursor.execute(
-                        """REPLACE INTO dict (key, value) VALUES (?, ?)""",
-                        (self._coder(key), self._coder(value)),
-                    )
+
+            with self._closeable_cursor() as cursor:
+                cursor.execute(
+                    """REPLACE INTO dict (key, value) VALUES (?, ?)""",
+                    (self._coder(key), self._coder(value)),
+                )
+
             self._do_write()
 
     def __delitem__(self, key):
         with self.lock:
             if type(key) == slice:
                 raise KeyError("Slices not allowed in SqliteDict")
-            else:
-                with self._closeable_cursor() as cursor:
-                    cursor.execute(
-                        """DELETE FROM dict WHERE key = ?""", (self._coder(key),)
-                    )
+
+            with self._closeable_cursor() as cursor:
+                cursor.execute(
+                    """DELETE FROM dict WHERE key = ?""", (self._coder(key),)
+                )
+
             self._do_write()
 
     def __iter__(self):
@@ -133,13 +135,13 @@ class SqliteDict(SqliteObject):
             with self._closeable_cursor() as cursor:
                 cursor.execute("""SELECT key, value FROM dict LIMIT 1""")
                 row = cursor.fetchone()
-                if row == None:
+                if row is None:
                     raise KeyError("Dict has no more items to pop")
-                else:
-                    key = self._decoder(row[0])
-                    value = self._decoder(row[1])
-                    del self[key]
-                    return (key, value)
+
+                key = self._decoder(row[0])
+                value = self._decoder(row[1])
+                del self[key]
+                return (key, value)
             self._do_write()
 
     def setdefault(self, key, default=None):
@@ -174,7 +176,7 @@ class SqliteDict(SqliteObject):
                     (self._sq_dict._coder(key), self._sq_dict._coder(value)),
                 )
                 val = cursor.fetchone()
-                if val == None:
+                if val is None:
                     return False
                 else:
                     return True
@@ -195,7 +197,7 @@ class SqliteDict(SqliteObject):
                     (self._sq_dict._coder(key),),
                 )
                 val = cursor.fetchone()
-                if val == None:
+                if val is None:
                     return False
                 else:
                     return True
@@ -216,10 +218,10 @@ class SqliteDict(SqliteObject):
                     (self._sq_dict._coder(value),),
                 )
                 val = cursor.fetchone()
-                if val == None:
+                if val is None:
                     return False
-                else:
-                    return True
+
+                return True
 
         def __iter__(self):
             with self._sq_dict._closeable_cursor() as cursor:

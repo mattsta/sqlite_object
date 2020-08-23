@@ -102,10 +102,13 @@ class SqliteSet(SqliteObject):
             with self._closeable_cursor() as cursor:
                 rows = cursor.execute("""SELECT key FROM set_table LIMIT 1""")
                 row = rows.fetchone()
-                if row == None:
+
+                if row is None:
                     raise KeyError("Tried to pop empty set_table")
+
                 self._discard(cursor, self._decoder(row[0]))
                 out = self._decoder(row[0])
+
             self._do_write()
             return out
 
@@ -119,6 +122,7 @@ class SqliteSet(SqliteObject):
         for item in self:
             if item not in other:
                 return False
+
         return True
 
     def __le__(self, other):
@@ -131,6 +135,7 @@ class SqliteSet(SqliteObject):
         for item in other:
             if item not in self:
                 return False
+
         return True
 
     def __ge__(self, other):
@@ -145,8 +150,8 @@ class SqliteSet(SqliteObject):
                 if item not in other:
                     return False
             return True
-        else:
-            return False
+
+        return False
 
     def update(self, other):
         for item in other:
