@@ -36,12 +36,13 @@ class SqliteSet(SqliteObject):
 
     def _has(self, cursor, item):
         rows = cursor.execute(
-            """SELECT key FROM set_table WHERE key = ?""", (self._coder(item),)
+            """SELECT COUNT(*) FROM set_table WHERE key = ?""", (self._coder(item),)
         )
-        if rows.fetchone() != None:
-            return True
-        else:
+
+        if rows.fetchone()[0] == 0:
             return False
+
+        return True
 
     def _remove(self, cursor, item):
         if self._has(cursor, item):

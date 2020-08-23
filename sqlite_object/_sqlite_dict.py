@@ -167,14 +167,15 @@ class SqliteDict(SqliteObject):
             key, value = item
             with self._sq_dict._closeable_cursor() as cursor:
                 cursor.execute(
-                    """SELECT * FROM dict WHERE key = ? AND value = ?""",
+                    """SELECT COUNT(*) FROM dict WHERE key = ? AND value = ?""",
                     (self._sq_dict._coder(key), self._sq_dict._coder(value)),
                 )
-                val = cursor.fetchone()
-                if val is None:
+
+                val = cursor.fetchone()[0]
+                if val == 0:
                     return False
-                else:
-                    return True
+
+                return True
 
         def __iter__(self):
             with self._sq_dict._closeable_cursor() as cursor:
@@ -188,14 +189,15 @@ class SqliteDict(SqliteObject):
         def __contains__(self, key):
             with self._sq_dict._closeable_cursor() as cursor:
                 cursor.execute(
-                    """SELECT * FROM dict WHERE key = ? """,
+                    """SELECT COUNT(*) FROM dict WHERE key = ? """,
                     (self._sq_dict._coder(key),),
                 )
-                val = cursor.fetchone()
-                if val is None:
+
+                val = cursor.fetchone()[0]
+                if val == 0:
                     return False
-                else:
-                    return True
+
+                return True
 
         def __iter__(self):
             with self._sq_dict._closeable_cursor() as cursor:
@@ -209,11 +211,12 @@ class SqliteDict(SqliteObject):
         def __contains__(self, value):
             with self._sq_dict._closeable_cursor() as cursor:
                 cursor.execute(
-                    """SELECT * FROM dict WHERE value = ? """,
+                    """SELECT COUNT(*) FROM dict WHERE value = ? """,
                     (self._sq_dict._coder(value),),
                 )
-                val = cursor.fetchone()
-                if val is None:
+
+                val = cursor.fetchone()[0]
+                if val == 0:
                     return False
 
                 return True

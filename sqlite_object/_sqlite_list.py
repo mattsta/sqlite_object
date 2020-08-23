@@ -170,14 +170,14 @@ class SqliteList(SqliteObject):
         with self.lock:
             with self._closeable_cursor() as cursor:
                 cursor.execute(
-                    """SELECT list_index FROM list WHERE value = ?""",
+                    """SELECT COUNT(*) FROM list WHERE value = ?""",
                     (self._coder(item),),
                 )
 
-                if cursor.fetchone() != None:
-                    return True
+                if cursor.fetchone()[0] == 0:
+                    return False
 
-                return False
+                return True
 
     def append(self, item):
         """
