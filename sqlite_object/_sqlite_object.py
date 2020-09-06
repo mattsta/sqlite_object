@@ -22,7 +22,7 @@ class SqliteObject(object):
         persist=False,
         commit_every=0,
     ):
-        self._db = sqlite3.connect(filename)
+        self._db = sqlite3.connect(filename, isolation_level=None)
         self._persist = persist
         self._filename = filename
         with self.lock:
