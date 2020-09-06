@@ -12,7 +12,7 @@ class SqliteSet(SqliteObject):
         filename=None,
         coder=json.dumps,
         decoder=json.loads,
-        index=True,
+        index=False,
         persist=False,
         commit_every=0,
     ):
