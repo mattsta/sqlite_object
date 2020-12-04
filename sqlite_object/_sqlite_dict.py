@@ -5,15 +5,15 @@ import json, uuid
 class SqliteDict(SqliteObject):
     """
     Dict-like object backed by an sqlite db.
-    
+
     Make sure your keys serialize repeatably with whatever serializer you choose to use (the default is json).
     If you use un-ordered sets, the json serializer may sometimes generate different keys, so don't do that!
-    
+
     Supports pretty much everything a regular dict supports:
     - setting values
     - retrieving values
     - checking if dict contains a key
-    - iterations 
+    - iterations
     - get() and setdefault()
     - update(<another dict or list like [(key, value),]>)
     - pop() and popitem()

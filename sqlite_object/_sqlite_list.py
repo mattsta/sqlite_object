@@ -12,7 +12,7 @@ l.append("another one!")
 class SqliteList(SqliteObject):
     """
     List-like object backed by an on-disk SQL db
-    
+
     Supports:
     - Indexing
     - Slicing (fairly efficient, but not insanely so)
@@ -20,8 +20,8 @@ class SqliteList(SqliteObject):
     - Adding items to either end of the list
     - Removing items from either end of the list
     - Checking if the list contains an item
-    - Efficient iteration over the whole list (forward and reversed()) 
-    
+    - Efficient iteration over the whole list (forward and reversed())
+
     Doesn't support:
     - Inserting items into the middle of the list
     - Deleting items from the middle of the list
